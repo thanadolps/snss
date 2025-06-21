@@ -1,0 +1,12 @@
+[package]
+name = "snss"
+description = "Basic SNSS file parsing (eg. Chrome Session and Tabs Files)"
+version = "0.1.0"
+edition = "2024"
+repository = "https://github.com/thanadolps/snss"
+license = "GPL-3.0-or-later"
+keywords = ["snss", "session", "tabs", "chrome", "chromium"]
+categories = ["parser-implementations"]
+
+[dependencies]
+winnow = "0.7.11"
