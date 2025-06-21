@@ -2,7 +2,7 @@
 //!
 //! # Examples
 //! ```no_run
-//! let data = std::fs::read("~/.config/vivaldi/Default/Sessions/Session_13395009830123502")?;
+//! let data = std::fs::read("Session")?;
 //! let snss = snss::parse(&data)?;
 //! for command in snss.commands {
 //!     if let snss::Content::Tab(tab) = command.content {
@@ -118,7 +118,7 @@ impl PageTransition {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Eq, PartialEq, Debug)]
 #[repr(u8)]
 pub enum PageTransitionType {
     /// User arrived at this page by clicking a link on another page
@@ -145,6 +145,7 @@ pub enum PageTransitionType {
     KeywordGenerated = 10,
 }
 
+#[derive(Clone, Copy, Eq, PartialEq, Debug)]
 pub struct PageTransitionQualifiers {
     /// User used the back or forward buttons to arrive at this page
     pub back_forward: bool,
@@ -232,3 +233,6 @@ fn parse_tab(s: &mut &Bytes) -> winnow::Result<Tab> {
     }}
     .parse_next(s)
 }
+
+#[cfg(test)]
+mod tests;

@@ -4,7 +4,7 @@ Basic SNSS file parsing (eg. Chrome Session and Tabs Files)
 
 # Examples
 ```rust
-let data = std::fs::read("~/.config/vivaldi/Default/Sessions/Session_13395009830123502")?;
+let data = std::fs::read("Session")?;
 let snss = snss::parse(&data)?;
 for command in snss.commands {
     if let snss::Content::Tab(tab) = command.content {
