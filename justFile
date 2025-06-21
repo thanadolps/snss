@@ -1,0 +1,5 @@
+prepare:
+    cargo rdme
+    cargo diet --reset-manifest
+    cargo fmt
+    cargo clippy --fix

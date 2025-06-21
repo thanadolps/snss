@@ -28,6 +28,13 @@ jobs:
       - name: Check if the README is up to date.
         run: cargo rdme --check
 
+      - name: Install cargo-diet
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-diet
+      - name: Check if the crate is lean
+        run: cargo diet --reset-manifest --dry-run | tee /dev/stderr | grep -q "There would be no change"
+
       - name: Install cargo-nextest
         uses: taiki-e/install-action@cargo-nextest
 
@@ -44,4 +51,4 @@ jobs:
 
       # Run tests with cargo-nextest
       - name: Run Tests
-        run: cargo nextest run
+        run: cargo nextest run --no-tests pass && cargo test --doc
