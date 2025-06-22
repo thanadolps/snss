@@ -7,7 +7,7 @@ repository = "https://github.com/thanadolps/snss"
 license = "GPL-3.0-or-later"
 keywords = ["snss", "session", "tabs", "chrome", "chromium"]
 categories = ["parser-implementations"]
-include = ["src/**/*", "LICENSE", "README.md", "!**/tests/**/*"]
+include = ["src/**/*", "LICENSE", "README.md", "CHANGELOG.md", "!**/tests/**/*"]
 
 [dependencies]
 winnow = "0.7.11"
