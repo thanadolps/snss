@@ -10,4 +10,4 @@ categories = ["parser-implementations"]
 include = ["src/**/*", "LICENSE", "README.md", "CHANGELOG.md", "!**/tests/**/*"]
 
 [dependencies]
-winnow = "0.7.11"
+winnow = "0.7.14"
