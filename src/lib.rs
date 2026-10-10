@@ -60,8 +60,14 @@ pub struct Command {
 }
 
 #[derive(Debug)]
+#[non_exhaustive]
 pub enum Content {
     Tab(Tab),
+    /// Which entry of a tab's back-forward list is currently shown
+    SelectedNavigationIndex {
+        tab_id: i32,
+        index: i32,
+    },
     Other(Vec<u8>),
 }
 
@@ -177,14 +183,23 @@ fn parse_command<'s>(s: &mut &'s Bytes) -> winnow::Result<Command> {
     trace("Command", |s: &mut &'s Bytes| {
         let id = le_u8.parse_next(s)?;
 
-        let content = if id == 1 || id == 6 {
-            parse_tab.map(Content::Tab).parse_next(s)?
-        } else {
-            Content::Other(s.to_vec())
+        let content = match id {
+            1 | 6 => parse_tab.map(Content::Tab).parse_next(s)?,
+            7 => parse_selected_navigation_index.parse_next(s)?,
+            _ => Content::Other(s.to_vec()),
         };
 
         Ok(Command { id, content })
     })
+    .parse_next(s)
+}
+
+fn parse_selected_navigation_index(s: &mut &Bytes) -> winnow::Result<Content> {
+    seq! { Content::SelectedNavigationIndex {
+        tab_id: le_i32.context(StrContext::Label("tab_id")),
+        index: le_i32.context(StrContext::Label("index")),
+        _: rest
+    }}
     .parse_next(s)
 }
 
