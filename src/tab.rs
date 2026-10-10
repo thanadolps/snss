@@ -119,8 +119,10 @@ pub(crate) fn parse_tab(s: &mut &Bytes) -> winnow::Result<Tab> {
         title: le_u32.map(|clen| clen * 2).flat_map(|len|
             take(len.next_multiple_of(4)).and_then(take(len).try_map(|s: &[u8]| {
                 let buf: Vec<u16> = s
-                    .chunks_exact(2)
-                    .map(|chunk| u16::from_le_bytes(chunk.try_into().unwrap()))
+                    .as_chunks::<2>()
+                    .0
+                    .iter()
+                    .map(|chunk| u16::from_le_bytes(*chunk))
                     .collect();
                 String::from_utf16(&buf)
             }))
