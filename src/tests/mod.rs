@@ -83,3 +83,27 @@ fn test_parse() {
         }
     );
 }
+
+#[test]
+fn test_parse_selected_navigation_index() {
+    let data = include_bytes!("Session_selected");
+
+    let snss = parse(data.as_slice()).unwrap();
+
+    let [nav1, nav2, selected] = snss.commands.try_into().unwrap();
+    let Content::Tab(nav1) = nav1.content else {
+        panic!()
+    };
+    let Content::Tab(nav2) = nav2.content else {
+        panic!()
+    };
+    assert_eq!((nav1.index, nav2.index), (6, 7));
+    assert_eq!(nav1.id, nav2.id);
+
+    assert_eq!(selected.id, 7);
+    let Content::SelectedNavigationIndex { tab_id, index } = selected.content else {
+        panic!()
+    };
+    assert_eq!(tab_id, nav1.id);
+    assert_eq!(index, 6);
+}
