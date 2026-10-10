@@ -107,3 +107,18 @@ fn test_parse_selected_navigation_index() {
     assert_eq!(selected.tab_id, nav1.id);
     assert_eq!(selected.index, 6);
 }
+
+#[test]
+fn test_parse_tab_closed() {
+    let data = include_bytes!("Session_tab_closed");
+
+    let snss = parse(data.as_slice()).unwrap();
+
+    let [closed] = snss.commands.try_into().unwrap();
+    assert_eq!(closed.id, 16);
+    let Content::TabClosed(closed) = closed.content else {
+        panic!()
+    };
+    assert_eq!(closed.tab_id, 503419326);
+    assert_eq!(closed.close_time, 13436084245264824);
+}
