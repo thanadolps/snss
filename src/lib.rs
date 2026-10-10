@@ -14,6 +14,7 @@
 
 mod selected_navigation_index;
 mod tab;
+mod tab_closed;
 
 use std::fmt::Display;
 
@@ -27,6 +28,8 @@ pub use selected_navigation_index::SelectedNavigationIndex;
 use selected_navigation_index::parse_selected_navigation_index;
 use tab::parse_tab;
 pub use tab::{PageTransition, PageTransitionQualifiers, PageTransitionType, Tab};
+pub use tab_closed::TabClosed;
+use tab_closed::parse_tab_closed;
 
 // Thanks for the following sources:
 // - https://digitalinvestigation.wordpress.com/tag/snss
@@ -70,6 +73,7 @@ pub struct Command {
 pub enum Content {
     Tab(Tab),
     SelectedNavigationIndex(SelectedNavigationIndex),
+    TabClosed(TabClosed),
     Other(Vec<u8>),
 }
 
@@ -92,6 +96,7 @@ fn parse_command<'s>(s: &mut &'s Bytes) -> winnow::Result<Command> {
             7 => parse_selected_navigation_index
                 .map(Content::SelectedNavigationIndex)
                 .parse_next(s)?,
+            16 => parse_tab_closed.map(Content::TabClosed).parse_next(s)?,
             _ => Content::Other(s.to_vec()),
         };
 
