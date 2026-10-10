@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0](https://github.com/thanadolps/snss/compare/v0.1.1...v0.2.0) - 2026-10-10
+
+### Added
+
+- parse TabClosed command
+- [**breaking**] parse SelectedNavigationIndex command and make Content non_exhaustive
+
+### Other
+
+- drop non_exhaustive from Content
+- replace chunks_exact with as_chunks to satisfy clippy
+- *(deps)* upgrade winnow to 1.0
+- split Tab and SelectedNavigationIndex into their own modules
+
 ## [0.1.1](https://github.com/thanadolps/snss/compare/v0.1.0...v0.1.1) - 2025-06-22
 
 ### Other
