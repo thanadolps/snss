@@ -69,7 +69,6 @@ pub struct Command {
 }
 
 #[derive(Debug)]
-#[non_exhaustive]
 pub enum Content {
     Tab(Tab),
     SelectedNavigationIndex(SelectedNavigationIndex),
