@@ -101,9 +101,9 @@ fn test_parse_selected_navigation_index() {
     assert_eq!(nav1.id, nav2.id);
 
     assert_eq!(selected.id, 7);
-    let Content::SelectedNavigationIndex { tab_id, index } = selected.content else {
+    let Content::SelectedNavigationIndex(selected) = selected.content else {
         panic!()
     };
-    assert_eq!(tab_id, nav1.id);
-    assert_eq!(index, 6);
+    assert_eq!(selected.tab_id, nav1.id);
+    assert_eq!(selected.index, 6);
 }
